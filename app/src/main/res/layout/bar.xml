@@ -61,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@android:color/black"/>
-            <TextView android:id="@+id/bar_see_cinema"
+            <TextView android:id="@+id/bar_view_cinema"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"

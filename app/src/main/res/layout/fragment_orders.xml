@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/fragment_orders_tv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="定单列表" />
+   <EditText android:id="@+id/bar_view_order"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text=""
+       />
 
 </LinearLayout>
