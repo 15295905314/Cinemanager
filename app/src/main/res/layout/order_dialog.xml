@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f3f3f3"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/white"
     android:orientation="vertical">
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="新影院"
+        android:text="新订单"
         android:gravity="center"
         android:background="#ffccff"
         android:textSize="50dp"
         android:textColor="@color/colorAccent"
         />
+
+    <EditText
+        android:id="@+id/order_dialog_edt_movie"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+        android:hint="请输入名称" />
+    <!--android:inputType="numberDecimal"-->
     <RelativeLayout
-        android:id="@+id/activity_cinema_content_layoutArea"
+        android:id="@+id/order_dialog_layoutTime"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white"
@@ -25,7 +32,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="请选择地点"
+            android:text="选择观影时间"
             android:background="@null"
             android:paddingStart="5dp"
             android:gravity="center"
@@ -33,7 +40,7 @@
             android:textSize="15dp" />
 
         <TextView
-            android:id="@+id/activity_dialog_location"
+            android:id="@+id/order_dialog_movieTime"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
@@ -42,36 +49,60 @@
             android:textSize="16sp"
             android:paddingEnd="10dp"
             android:paddingStart="5dp"
-            tools:text="广西柳州鱼峰区"
+            tools:text="2019-04-01 10:30:00"
             android:textColor="@android:color/holo_blue_dark"/>
 
     </RelativeLayout>
 
+    <Spinner
+        android:id="@+id/order_dialog_btn_spinnerArea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <EditText
-        android:id="@+id/activity_dialog_edt_name"
+        android:id="@+id/order_dialog_edt_price"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="请输入名称" />
+        android:digits="0123456789."
+        android:hint="请输入票价" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
-        <Button android:id="@+id/activity_dialog_cancel"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:textSize="18dp"
-            android:gravity="right"
-            android:layout_height="wrap_content"
-            android:text="取消"/>
+        android:orientation="horizontal">
 
         <Button
-            android:id="@+id/activity_dialog_save"
+            android:id="@+id/order_dialog_btn_er"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="保存"
-            android:textSize="18dp" />
+            android:layout_height="wrap_content"
+            android:text="生成二维码" />
+
+        <Button
+            android:id="@+id/order_dialog_btn_ok"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="保存" />
+
+        <Button
+            android:id="@+id/order_dialog_btn_3"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="取消" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="100dp" >
+
+        <ImageView android:id="@+id/order_dialog_Iv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
     </LinearLayout>
 
 </LinearLayout>

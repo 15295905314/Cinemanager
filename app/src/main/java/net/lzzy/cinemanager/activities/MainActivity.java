@@ -22,7 +22,9 @@ import net.lzzy.cinemanager.constants.fragments.OrdersFragment;
 /**
  * @author Administrator
  */
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener
+,AddCinemasFrament.OnFragmentInteractionListener
+{
     private View layoutMenu;
     private SearchView search;
     private TextView tvTitle;
@@ -101,5 +103,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
         return null;
+    }
+
+    @Override
+    public void hideSearch() {
+        search.setVisibility(View.INVISIBLE);
     }
 }
