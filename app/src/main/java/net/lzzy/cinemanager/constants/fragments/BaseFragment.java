@@ -41,4 +41,5 @@ public BaseFragment(){}
 
         return Objects.requireNonNull(getView()).findViewById(id);
     }
+    public abstract void search(String kw);
 }

@@ -16,15 +16,17 @@ import android.widget.TextView;
 import net.lzzy.cinemanager.R;
 import net.lzzy.cinemanager.constants.fragments.AddCinemasFrament;
 import net.lzzy.cinemanager.constants.fragments.AddOrdersFragment;
+import net.lzzy.cinemanager.constants.fragments.BaseFragment;
 import net.lzzy.cinemanager.constants.fragments.CinemasFrament;
 import net.lzzy.cinemanager.constants.fragments.OrdersFragment;
+import net.lzzy.cinemanager.models.Cinema;
+import net.lzzy.cinemanager.utils.ViewUtils;
 
 /**
  * @author Administrator
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
-,AddCinemasFrament.OnFragmentInteractionListener
-{
+        , AddCinemasFrament.OnFragmentInteractionListener, AddCinemasFrament.OnCinemaCreatedListener {
     private View layoutMenu;
     private SearchView search;
     private TextView tvTitle;
@@ -38,6 +40,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         setTitleMenu();
+        search.setOnQueryTextListener(new ViewUtils.AbstractQueryHandler() {
+            @Override
+            public boolean handleQuery(String kw) {
+                Fragment fragment =manager.findFragmentById(R.id.fragment_container);
+                if (fragment!=null) {
+                    if (fragment instanceof BaseFragment) {
+                        ((BaseFragment) fragment).search(kw);
+                    }
+                }
+                return true;
+            }
+        });
 
 
     }
@@ -70,8 +84,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         layoutMenu.setVisibility(View.GONE);
-
         tvTitle.setText(titleArray.get(v.getId()));
+
         FragmentTransaction transaction = manager.beginTransaction();
         Fragment fragment = fragmentArray.get(v.getId());
         if (fragment == null) {
@@ -79,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             fragmentArray.put(v.getId(), fragment);
             transaction.add(R.id.fragment_container, fragment);
         }
-        for (Fragment f:manager.getFragments()) {
+        for (Fragment f : manager.getFragments()) {
             transaction.hide(f);
         }
         transaction.show(fragment).commit();
@@ -88,14 +102,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Fragment createFragment(int id) {
         switch (id) {
-            case R.id.bar_add_cinema :
+            case R.id.bar_add_cinema:
                 return new AddCinemasFrament();
 
             case R.id.bar_view_cinema:
-               return new CinemasFrament();
+                return new CinemasFrament();
 
             case R.id.bar_add_order:
-
                 return new AddOrdersFragment();
             case R.id.bar_order:
                 return new OrdersFragment();
@@ -108,5 +121,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void hideSearch() {
         search.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void cencelAddCinema() {
+        Fragment addCinemasFragment = fragmentArray.get(R.id.bar_add_cinema);
+        if (addCinemasFragment == null) {
+            return;
+        }
+        Fragment cinemasFragment = fragmentArray.get(R.id.bar_view_cinema);
+        FragmentTransaction transaction = manager.beginTransaction();
+        if (cinemasFragment == null) {
+            cinemasFragment = new CinemasFrament();
+            fragmentArray.put(R.id.bar_view_cinema, cinemasFragment);
+            transaction.add(R.id.fragment_container, cinemasFragment);
+        }
+        transaction .hide(addCinemasFragment).show(cinemasFragment).commit();
+        tvTitle.setText(titleArray.get(R.id.bar_view_cinema));
+
+    }
+
+    @Override
+    public void saveCinema(Cinema cinema) {
+        Fragment addCinemaFragment=fragmentArray.get(R.id.bar_add_cinema);
+        if (addCinemaFragment==null){
+            return;
+        }
+        Fragment cinemasFragment=fragmentArray.get(R.id.bar_view_cinema);
+        FragmentTransaction transaction =manager.beginTransaction();
+        if (cinemasFragment==null){
+            cinemasFragment=new CinemasFrament(cinema);
+        }else {
+            ((CinemasFrament)cinemasFragment).svae(cinema);
+        }
+        transaction.hide(addCinemaFragment).show(cinemasFragment).commit();
+        tvTitle.setText(titleArray.get(R.id.bar_view_cinema));
     }
 }

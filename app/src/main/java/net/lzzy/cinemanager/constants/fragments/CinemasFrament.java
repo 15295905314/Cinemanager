@@ -1,5 +1,6 @@
 package net.lzzy.cinemanager.constants.fragments;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,6 +22,14 @@ public class CinemasFrament extends BaseFragment {
     private List<Cinema> cinemas;
     private CinemaFactory factory = CinemaFactory.getInstance();
     private ListView lv;
+    private Cinema cinema;
+    private GenericAdapter<Cinema> adapter;
+
+    public CinemasFrament(){}
+
+    public CinemasFrament(Cinema cinema) {
+        this.cinema=cinema;
+    }
 
 
     //TextView textView = view.findViewById(R.id.fragment_cinemas_tv);
@@ -31,7 +40,7 @@ public class CinemasFrament extends BaseFragment {
         View empty = find(R.id.activity_main_layout_name);
         lv.setEmptyView(empty);
         cinemas=factory.get();
-        GenericAdapter<Cinema> adapter=new GenericAdapter<Cinema>(getActivity(),
+        adapter = new GenericAdapter<Cinema>(getActivity(),
                 R.layout.cinema_item,cinemas) {
             @Override
             public void populate(ViewHolder holder, Cinema cinema) {
@@ -50,11 +59,29 @@ public class CinemasFrament extends BaseFragment {
             }
         };
         lv.setAdapter(adapter);
+        if (cinema!=null){
+            svae(cinema);
+        }
 
     }
 
     @Override
     public int getLayoutRes() {
         return R.layout.fragment_cinemas;
+    }
+
+    @Override
+    public void search(String kw) {
+        cinemas.clear();
+        if (TextUtils.isEmpty(kw)){
+            cinemas.addAll(factory.get());
+        }else {
+            cinemas.addAll(factory.searchCinemas(kw));
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    public void svae(Cinema cinema){
+        adapter.add(cinema);
     }
 }

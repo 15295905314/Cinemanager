@@ -1,6 +1,7 @@
 package net.lzzy.cinemanager.constants.fragments;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
@@ -30,13 +31,16 @@ public class AddCinemasFrament extends BaseFragment {
     private String province = "广西壮族自治区";
     private String area = "鱼峰区";
     private OnFragmentInteractionListener listener;
+    private OnCinemaCreatedListener cinemaListener;
 
 
 
     @Override
     protected void populate() {
+        listener.hideSearch();
         TextView tvArea=find(R.id.activity_dialog_location);
         EditText edtName =find(R.id.activity_dialog_edt_name);
+
         find(R.id.activity_cinema_content_layoutArea).setOnClickListener(v -> {
         JDCityPicker cityPicker = new JDCityPicker();
         cityPicker.init(getActivity());
@@ -56,28 +60,31 @@ public class AddCinemasFrament extends BaseFragment {
 
         });
         cityPicker.showCityPicker();
-    });
+        });
 
 
-    find(R.id.activity_dialog_save).setOnClickListener(v -> {
+         find(R.id.activity_dialog_save).setOnClickListener(v -> {
+
+             String name = edtName.getText().toString();
+             if (TextUtils.isEmpty(name)){
+                  Toast.makeText(getActivity(),"要有名称",Toast.LENGTH_SHORT).show();
+                 return;
+              }
+             Cinema cinema = new Cinema();
+             cinema.setCity(city);
+             cinema.setName(name);
+             cinema.setArea(area);
+             cinema.setProvince(province);
+             cinema.setLocation(tvArea.getText().toString());
+             edtName.setText("");
+             cinemaListener.saveCinema(cinema);
+
+         });
+         find(R.id.activity_dialog_cancel).setOnClickListener(v ->{
+             cinemaListener.cencelAddCinema();
+         });
 
 
-        String name = edtName.getText().toString();
-        if (TextUtils.isEmpty(name)){
-            Toast.makeText(getActivity(),"要有名称",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        Cinema cinema = new Cinema();
-        cinema.setCity(city);
-        cinema.setName(name);
-        cinema.setArea(area);
-        cinema.setProvince(province);
-        cinema.setLocation(tvArea.getText().toString());
-
-       edtName.setText("");
-
-
-    });
     }
 
     @Override
@@ -86,12 +93,19 @@ public class AddCinemasFrament extends BaseFragment {
     }
 
     @Override
+    public void search(String kw) {
+
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
       try {
           listener=(OnFragmentInteractionListener) context;
+         cinemaListener=(OnCinemaCreatedListener)context;
       }catch (ClassCastException e){
-          throw new ClassCastException(context.toString()+"必须实现OnFragmenInteractionListener");
+          throw new ClassCastException(context.toString()
+                  +"必须实现OnFragmentInteractionListener&OnCinemaCreatedListener");
       }
     }
 
@@ -99,10 +113,18 @@ public class AddCinemasFrament extends BaseFragment {
     public void onDetach() {
         super.onDetach();
         listener=null;
+        cinemaListener=null;
 
     }
 
+
+
+
     public interface OnFragmentInteractionListener{
         void hideSearch();
+    }
+    public interface OnCinemaCreatedListener{
+        void cencelAddCinema();
+        void saveCinema(Cinema cinema);
     }
 }
