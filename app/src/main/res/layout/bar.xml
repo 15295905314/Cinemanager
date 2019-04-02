@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="查看影院"
+                android:text="影院列表"
                 android:textSize="18dp" />
             <View
                 android:layout_width="match_parent"
