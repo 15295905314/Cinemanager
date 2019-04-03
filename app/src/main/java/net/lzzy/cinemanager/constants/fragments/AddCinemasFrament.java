@@ -1,12 +1,12 @@
 package net.lzzy.cinemanager.constants.fragments;
 
 
-import android.app.Activity;
+
 import android.content.Context;
 import android.text.TextUtils;
-import android.view.View;
+
 import android.widget.EditText;
-import android.widget.LinearLayout;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,8 +18,6 @@ import com.lljjcoder.style.cityjd.JDCityPicker;
 
 import net.lzzy.cinemanager.R;
 import net.lzzy.cinemanager.models.Cinema;
-
-import java.security.cert.CertificateException;
 
 /**
  * Created by lzzy_gxy on 2019/3/27.

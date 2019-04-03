@@ -17,29 +17,33 @@ import java.util.Objects;
  * Created by lzzy_gxy on 2019/3/27.
  * Description:
  */
-public  abstract class BaseFragment extends Fragment {
-public BaseFragment(){}
+public abstract class BaseFragment extends Fragment {
+    public BaseFragment() {
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-      return   inflater.inflate(getLayoutRes(),container,false);
+        return inflater.inflate(getLayoutRes(), container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         populate();
     }
-/**
-*
-* **/
+
+    /**
+     *
+     **/
 
     protected abstract void populate();
 
     public abstract int getLayoutRes();
-     <T extends View> T find(@IdRes int id) {
+
+    <T extends View> T find(@IdRes int id) {
 
         return Objects.requireNonNull(getView()).findViewById(id);
     }
+
     public abstract void search(String kw);
 }

@@ -26,6 +26,7 @@ public class OrdersFragment extends BaseFragment{
     private OrderFactory factory;
     private GenericAdapter<Order> adapter;
     private Order order;
+    //public OrderFactory orderFactory=OrderFactory.getInstance();
     public OrdersFragment() {
     }
 

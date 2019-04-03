@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.View;
@@ -17,6 +18,7 @@ import net.lzzy.cinemanager.R;
 import net.lzzy.cinemanager.constants.fragments.AddCinemasFrament;
 import net.lzzy.cinemanager.constants.fragments.AddOrdersFragment;
 import net.lzzy.cinemanager.constants.fragments.BaseFragment;
+import net.lzzy.cinemanager.constants.fragments.CinemaOrdersFragment;
 import net.lzzy.cinemanager.constants.fragments.CinemasFrament;
 import net.lzzy.cinemanager.constants.fragments.OrdersFragment;
 import net.lzzy.cinemanager.models.Cinema;
@@ -28,7 +30,9 @@ import net.lzzy.cinemanager.utils.ViewUtils;
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
         , AddCinemasFrament.OnFragmentInteractionListener, AddCinemasFrament.OnCinemaCreatedListener,
-        AddOrdersFragment.OnOrderCreatedListener,AddOrdersFragment.OnFragmentInteractionListener {
+        AddOrdersFragment.OnOrderCreatedListener,AddOrdersFragment.OnFragmentInteractionListener,
+        CinemasFrament.onCinemaSelectedListener {
+    public static final String EXTRA_CINEMA_ID = "ExtraCinemaId";
     private View layoutMenu;
     private SearchView search;
     private TextView tvTitle;
@@ -206,5 +210,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvTitle.setText(titleArray.get(R.id.bar_order));
         search.setVisibility(View.VISIBLE);
 
+    }
+
+
+    @Override
+    public void OnCinemsSelected(String cinemaId) {
+        Intent intent =new Intent(MainActivity.this, CinemaOrdersActivity.class);
+        intent.putExtra(EXTRA_CINEMA_ID,cinemaId);
+        startActivity(intent);
     }
 }
