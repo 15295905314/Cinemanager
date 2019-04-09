@@ -23,12 +23,13 @@
         android:text="广西柳州城中区"
         android:textSize="15dp" />
 </LinearLayout>
+
     <Button android:id="@+id/activity_cinema_btn"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:focusable="false"
         android:visibility="gone"
-        android:background="@drawable/btn_delete_style"
+        android:background="@color/liji_material_red_500"
         android:text="删除"/>
 
 </LinearLayout>

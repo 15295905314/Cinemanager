@@ -54,22 +54,26 @@ public class CinemaOrdersFragment extends BaseFragment{
         GenericAdapter<Order> adapter=new GenericAdapter<Order>(getActivity(),R.layout.cinema_item,orders) {
             @Override
             public void populate(ViewHolder holder, Order order) {
-                holder.setTextView(R.id.activity_dialog_save,order.getMovie())
-                        .setTextView(R.id.activity_dialog_location,order.getMovieTime());
+                holder.setTextView(R.id.activity_cinema_item_name,order.getMovie())
+                        .setTextView(R.id.activity_cinema_item_area,order.getMovieTime());
+
             }
             //cinema_item_tv_name
             //cinema_item_tv_location
 
             @Override
-            public boolean persistInsert(Order order) {
+            public boolean persistInsert(Order order)
+            {
                 return false;
             }
 
             @Override
-            public boolean persistDelete(Order order) {
+            public boolean persistDelete(Order order)
+            {
                 return false;
             }
         };
+        lv.setAdapter(adapter);
 
 
     }
